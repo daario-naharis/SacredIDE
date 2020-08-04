@@ -61,7 +61,10 @@ const Problem = ({onCodeChange,onLanguageChange,onInputChange,onButtonSubmit,onB
 					
 				</textarea>
 			</div>
+			<div>
 			<p className="white tl mh4">BUG FOUND : If you want to compile, hit the compile button twice and if you want to run, hit the run button twice</p>
+			<p className="white tl mh4">PLEASE INSTALL CORS UNBLOCK EXTENSION SO THAT THIS API CAN WORK</p>
+			</div>
 			<div>
 				<button 
 				type="button"

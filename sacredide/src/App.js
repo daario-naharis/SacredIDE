@@ -155,7 +155,7 @@ onButtonSubmit = () =>{
                         this.setState({runRes:""});
                       }
                       else{
-                        fetch('http://localhost:3000/code',{
+                        fetch('https://arcane-escarpment-53129.herokuapp.com/code',{
                           method: 'put',
                           headers: {'Content-Type':'application/json'},
                           body: JSON.stringify({

@@ -4,13 +4,13 @@ const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+
 const db = knex({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    user : 'postgres',
-    password : 'w311U~mE',
-    database : 'sacredide-db'
+    connectionString : process.env.DATABASE_URL,
+    ssl : true
   }
 });
 
@@ -29,7 +29,7 @@ app.use(cors())
 
 
 app.get('/',(req,res)=>{
-	res.json(database.users);
+	res.json('it is working');
 })
 
 
@@ -132,8 +132,8 @@ app.put('/code',(req,res) =>{
 
 
 
-app.listen(3000,()=> {
-	console.log('app is running on port 3000');
+app.listen(process.env.PORT || 3000,()=> {
+	console.log(`app is running on port ${process.env.PORT}`);
 })
 
 
