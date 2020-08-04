@@ -34,13 +34,17 @@ app.get('/',(req,res)=>{
 
 
 app.post('/signin',(req,res) => {
+	const {email,password} = req.body;
+	if(!email||!password){
+		return res.status(400).json('incorrect form submission');
+	}
 	db.select('email','hash').from('login')
-	.where('email', '=' ,req.body.email)
+	.where('email', '=' ,email)
 		.then(data =>{
-			const isValid = bcrypt.compareSync(req.body.password,data[0].hash);
+			const isValid = bcrypt.compareSync(password,data[0].hash);
 			if(isValid){
 				return db.select('*').from('users')
-				.where('email','=',req.body.email)
+				.where('email','=',email)
 				.then(user =>{
 						res.json(user[0])
 				})
@@ -59,6 +63,10 @@ app.post('/signin',(req,res) => {
 
 app.post('/register',(req,res)=>{
 	const {email,name,password} = req.body;
+
+	if(!email||!password||!name){
+		return res.status(400).json('incorrect form submission');
+	}
 
 	const hash = bcrypt.hashSync(password);
 
@@ -121,6 +129,14 @@ app.put('/code',(req,res) =>{
   })
 })
 
+
+
+
+app.listen(3000,()=> {
+	console.log('app is running on port 3000');
+})
+
+
 //Syncronous
 
 // var hash = bcrypt.hashSync("bacon");
@@ -143,8 +159,4 @@ app.put('/code',(req,res) =>{
 // });
 
 
-
-app.listen(3000,()=> {
-	console.log('app is running on port 3000');
-})
 

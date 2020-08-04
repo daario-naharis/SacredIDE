@@ -12,7 +12,7 @@ import Scroll from './Functions/Scroll';
 import './App.css';
 import HackerEarth from 'hackerearth-node';
 
-const hackerEarth=new HackerEarth('','');
+const hackerEarth=new HackerEarth('2e9c01fea03ed5c75426d580a4ff85bc34df81e0','');
 //I removed the secret API key for security reasons 
 //use your own API key as first parameter in HackerEarth()
 //for example const hackerEarth=new HackerEarth('SECRET_API_KEY','');
@@ -70,17 +70,13 @@ FAILURE->
 
 */
 
-class App extends Component{
-
-  constructor(){
-    super();
-    this.state = {
+const initialState ={
       config:{
         time_limit:1,
         memory_limit:323244,
         input:'',
-        source:"prin 'Hello World'",
-        language:'PYTHON'
+        source:"",
+        language:''
       },
       code:"",
       testCases:"",
@@ -97,7 +93,15 @@ class App extends Component{
         submissions: 0,
         joined: ''
       }
-    }
+}
+
+
+
+class App extends Component{
+
+  constructor(){
+    super();
+    this.state = initialState;
   }
 
 loadUser = (data) =>{
@@ -162,6 +166,7 @@ onButtonSubmit = () =>{
                           .then(count=>{
                               this.setState(Object.assign(this.state.user,{submissions:count}))
                             })
+                          .catch(console.log)
                         // result.preventDefault();
                         this.setState({compileRes:"compilation successful<h3>The output is:</h3>"});
                         this.setState({runRes:runOutput.run_status.output_html});
@@ -223,10 +228,10 @@ onButtonCompile = () =>{
 
 onRouteChange = (route) =>{
   if(route === 'signin'){ 
-    this.setState({isSignedIn:false})
+    this.setState(initialState)
   }
   else if(route === 'register'){
-    this.setState({isSignedIn:false})
+    this.setState(initialState)
   }
   else{
     this.setState({isSignedIn:true})
